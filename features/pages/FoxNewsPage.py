@@ -1,7 +1,8 @@
 
 import lxml
 import requests
-import urllib3
+import urllib
+import hashlib
 from io import BytesIO
 from lxml import etree
 from lxml import html
@@ -19,5 +20,6 @@ class FoxNewsPage(Page):
         headlines = {}
         headlines['headline'] = headline[1].text
         headlines['image'] = image
+        headlines['hash'] = hashlib.md5(headline[1].text.encode('utf-8'))
         context.headlines.append(headlines)
         return True

@@ -25,4 +25,5 @@ def step_impl(context):
 def step_impl(context):
    print(context.headlines[0]['headline'])
    print(context.headlines[0]['image'])
+   print(context.headlines[0]['hash'].hexdigest())
 

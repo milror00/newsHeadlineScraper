@@ -9,5 +9,5 @@ Feature: To capture the TOP headline and image.
 
     And I capture the top headline for each newspaper
     Then for each headline I can write it out to stdout
-    #Then for each headline I can write it out to my database headlines
-    #And for each paper print out the latest headline from database headlines
+    Then for each headline I can write it out to my database headlines
+    And for each paper print out the latest headline from database headlines

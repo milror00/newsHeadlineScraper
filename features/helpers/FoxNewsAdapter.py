@@ -1,9 +1,9 @@
 from datetime import datetime
 import hashlib
-from features.helpers.NewspaperAdapter import NewspaperAdapter
+from features.helpers.Adapter import Adapter
 
 
-class FoxNewsAdapter(NewspaperAdapter):
+class FoxNewsAdapter(Adapter):
 
     def headlineExist(self, context, imageurl):
         query = 'SELECT imageurl from headlines WHERE newspaper = "FOXNEWS" ORDER BY headlinedate DESC LIMIT 1  '

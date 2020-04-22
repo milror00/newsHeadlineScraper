@@ -26,13 +26,11 @@ def step_impl(context):
 
 @then(u'for each headline I can write it out to stdout')
 def step_impl(context):
-    news = NewspaperAdapter()
-    newspapers = news.getAllDistinctNewspapers(context)
-    loop = 0
-    for newspaper in newspapers:
-        if newspaper[loop] == 'FOXNEWS':
-            paper = FoxNewsAdapter()
-            paper.asText(context)
+    for newspaper in context.newspapers:
+        paper = newspaper[1]
+        if paper == 'FOXNEWS':
+            page = FoxNewsPage()
+            page.asText(context)
 
 @then(u'for each headline I can write it out to my database headlines')
 def step_impl(context):

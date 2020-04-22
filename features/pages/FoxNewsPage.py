@@ -23,3 +23,6 @@ class FoxNewsPage(Page):
         headlines['imageurl'] = image
         context.headlines.append(headlines)
         return True
+
+    def asText(self, context):
+        print("Latest FOXNEWS headline scrape: \n" + context.headlines[0]['headline'])

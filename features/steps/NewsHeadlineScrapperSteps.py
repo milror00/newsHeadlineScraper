@@ -4,6 +4,8 @@ from behave import given, when, then
 
 from features.configuration.configuration import Configuration
 from features.pages.FoxNewsPage import FoxNewsPage
+from features.helpers.NewspaperAdapter import NewspaperAdapter
+from features.helpers.FoxNewsAdapter import FoxNewsAdapter
 
 @given(u'I am I have a list of newspaper urls')
 def step_impl(context):
@@ -17,13 +19,43 @@ def step_impl(context):
 def step_impl(context):
     for newspaper in context.newspapers:
         context.currentURL = newspaper[0]
-        newspaper=newspaper[1]
-        page = FoxNewsPage()
-        page.getHeadline(context)
+        paper = newspaper[1]
+        if newspaper[1] == 'FOXNEWS':
+            page = FoxNewsPage()
+            page.getHeadline(context)
 
 @then(u'for each headline I can write it out to stdout')
 def step_impl(context):
-   print(context.headlines[0]['headline'])
-   print(context.headlines[0]['image'])
-   print(context.headlines[0]['hash'].hexdigest())
+    news = NewspaperAdapter()
+    newspapers = news.getAllDistinctNewspapers(context)
+    loop = 0
+    for newspaper in newspapers:
+        if newspaper[loop] == 'FOXNEWS':
+            paper = FoxNewsAdapter()
+            paper.asText(context)
+
+@then(u'for each headline I can write it out to my database headlines')
+def step_impl(context):
+    news = NewspaperAdapter()
+    newspapers = news.getAllDistinctNewspapers(context)
+    loop = 0
+    for newspaper in newspapers:
+        if newspaper[loop] == 'FOXNEWS':
+            fox = FoxNewsAdapter()
+            fox.insertNewsheadline(context)
+        loop = loop + 1
+
+@then(u'for each paper print out the latest headline from database headlines')
+def step_impl(context):
+    news = NewspaperAdapter()
+    newspapers = news.getAllDistinctNewspapers(context)
+    loop = 0
+    for newspaper in newspapers:
+        if newspaper[loop] == 'FOXNEWS':
+            fox = FoxNewsAdapter()
+            headline = fox.getLatestHeadline(context, newspaper[loop])
+            print("Latest " + newspaper[loop] + " headline in DB: \n" + headline[0][0])
+        loop = loop + 1
+
+
 

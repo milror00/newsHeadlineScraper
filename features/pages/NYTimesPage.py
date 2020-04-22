@@ -1,4 +1,3 @@
-
 import lxml
 import requests
 import urllib
@@ -8,14 +7,14 @@ from lxml import etree
 from lxml import html
 from features.pages.Page import Page
 
-class FoxNewsPage(Page):
+class NYTimesPage(Page):
 
     def getHeadline(self, context):
         details = {}
         self.__getURL__(context)
         dom = lxml.html.parse(BytesIO(context.response.data))
         xpatheval = etree.XPathDocumentEvaluator(dom)
-        headline =  xpatheval('.//*[@class="article story-1"]/div[2]/header/h2/a')
+        headline =  xpatheval('.//*/h2/span')
         image = xpatheval('.//*[@class="article story-1"]//img/@src')[1]
         headlines = {}
         headlines['newspaper'] = 'FOXNEWS'

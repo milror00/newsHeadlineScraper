@@ -28,6 +28,29 @@ Install libraries : pip install behave pip install requests pip install lxml
 
 Open the console at the root of project and run the command :  behave ./features
 
+if you are going to use MYSql then run behave ./features -D user=username -D pass = password
+
+MySQL DDL 
+
+create table headlines
+
+(
+
+	id int auto_increment
+  
+		primary key,
+    
+	newspaper varchar(200) not null,
+  
+	headline varchar(200) not null,
+  
+	imageurl varchar(200) not null,
+  
+	headlinedate datetime not null
+  
+);
+
+
 #Feature
 
 Feature: To capture the TOP headline and image.

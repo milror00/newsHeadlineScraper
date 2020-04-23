@@ -6,6 +6,7 @@ from features.configuration.configuration import Configuration
 from features.helpers.FoxNewsAdapter import FoxNewsAdapter
 from features.helpers.NewspaperAdapter import NewspaperAdapter
 from features.pages.FoxNewsPage import FoxNewsPage
+from features.pages.NYTimesPage import NYTimesPage
 
 
 @given(u'I am I have a list of newspaper urls')
@@ -22,7 +23,10 @@ def step_impl(context):
         context.currentURL = newspaper[0]
         paper = newspaper[1]
         if newspaper[1] == 'FOXNEWS':
-            page = FoxNewsPage()
+            page = FoxNewsPage(context)
+            page.getHeadline(context)
+        elif newspaper[1] == 'NYTIMES':
+            page = NYTimesPage(context)
             page.getHeadline(context)
 
 @then(u'for each headline I can write it out to stdout')
@@ -30,7 +34,10 @@ def step_impl(context):
     for newspaper in context.newspapers:
         paper = newspaper[1]
         if paper == 'FOXNEWS':
-            page = FoxNewsPage()
+            page = FoxNewsPage(context)
+            page.asText(context)
+        if paper == 'NYTIMES':
+            page = NYTimesPage(context)
             page.asText(context)
 
 @then(u'for each headline I can write it out to my database headlines')
